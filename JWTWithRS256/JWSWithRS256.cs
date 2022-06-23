@@ -2,18 +2,18 @@
 using System;
 using System.Security.Cryptography;
 
-namespace JWTWithRS256
+namespace Cryptography
 {
-    public static class JWSWithRS256
+    public static class JwsWithRS256
     {
         /// <summary>
-        /// To validate the content of the JWT with the signature.
+        /// To validate the JWS signature 
         /// The signature is creating by the RSA encoding of the SHA-256 hash of the content of headerBase64UrlEncoded.payloadBase64UrlEncoded 
         /// </summary>
         /// <param name="JWSWithRS256">JWS content of headerBase64UrlEncoded.payloadBase64UrlEncoded.signatureBaseURlEncoded</param>
         /// <param name="publicKeyRSABase64UrlEncoded">publickey of RSA base64 url encoded which will be used to validate the SHA-256 hash from the signature</param>
         /// <returns>True if JWS has header and payload valid with the signature</returns>
-        public static bool IsJWTValidFromRS256(string JWSWithRS256, string publicKeyRSABase64UrlEncoded)
+        public static bool IsJWSValidFromRS256(string JWSWithRS256, string publicKeyRSABase64UrlEncoded)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace JWTWithRS256
 
                 #region === Step 2: Get SHA256HashToBeSigned from {headerBase64UrlEncoded.payloadBase64UrlEncoded} ===
 
-                var SHA256HashToBeSigned = BuildJWTHeaderPayloadSHA256Hash(headerBase64UrlEncoded, payloadBase64UrlEncoded);
+                var SHA256HashToBeSigned = BuildJWSHeaderPayloadSHA256Hash(headerBase64UrlEncoded, payloadBase64UrlEncoded);
 
                 #endregion
 
@@ -75,7 +75,7 @@ namespace JWTWithRS256
         /// <param name="headerBase64UrlEncoded">JWS Header base64 url encoded</param>
         /// <param name="payloadBase64UrlEncoded">JWS Payload base64 url encoded</param>
         /// <returns></returns>
-        private static byte[] BuildJWTHeaderPayloadSHA256Hash(string headerBase64UrlEncoded, string payloadBase64UrlEncoded)
+        private static byte[] BuildJWSHeaderPayloadSHA256Hash(string headerBase64UrlEncoded, string payloadBase64UrlEncoded)
         {
             return SHA256.Create().ComputeHash(
                System.Text.Encoding.UTF8.GetBytes($"{headerBase64UrlEncoded}.{payloadBase64UrlEncoded}"));
