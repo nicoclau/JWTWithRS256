@@ -1,2 +1,3 @@
 # JWTWithRS256
-JWTWithRS256 Will validate the JWS with correct content, in the program it will return true. 
+JWTWithRS256 Will validate the JWS.
+In our example, the JWT has correct content, JWTWithRS256 will return true.
